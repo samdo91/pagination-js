@@ -105,8 +105,6 @@ function Pagination({ $target, initialState }) {
 
       const prevRange = (currentPage - 1) * paginationLimit;
       const currRange = currentPage * paginationLimit;
-      const prevButton = (currentPage - 1) * paginationButtonLimit;
-      const currButton = currentPage * paginationButtonLimit;
 
       listItems.forEach((item, index) => {
         item.classList.add("hidden");
@@ -115,6 +113,8 @@ function Pagination({ $target, initialState }) {
         }
       });
 
+      //한 번에 출력되는 버튼의 수 시정가능
+      //1부터 5까지는 변화 없이 왼쪽으로만 이동한다.
       if (pageNum <= 5) {
         buttonItem.forEach((item, index) => {
           item.classList.add("hidden");
@@ -130,26 +130,12 @@ function Pagination({ $target, initialState }) {
           }
         });
       }
-
-      // if ((pageNum = 1)) {
-      //   buttonItem.forEach((item, index) => {
-      //     item.classList.add("hidden");
-      //     if (pageNum === index || index < pageNum + 5) {
-      //       item.classList.remove("hidden");
-      //     }
-      //   });
-      // } else if ((pageNum = 2)) {
-      //   buttonItem.forEach((item, index) => {
-      //     item.classList.add("hidden");
-      //     if (pageNum === index || index < pageNum + 5) {
-      //       item.classList.remove("hidden");
-      //     }
-      //   });
-      // }
     };
-
+    // 로드 될때 조건
     window.addEventListener("load", () => {
+      // 버튼을 랜더링함
       getPaginationNumbers();
+      //1번 페이지를 렌더링 하는 것으로 화면 랜더링 시작
       setCurrentPage(1);
 
       this.$prevButton.addEventListener("click", () => {
