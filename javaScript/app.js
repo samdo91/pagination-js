@@ -1,6 +1,6 @@
 import Pagination from "./pagination.js";
 function App({ $target }) {
-  const arrayLength = 100;
+  const arrayLength = 1000;
   const arrayMaker = (arrayLength) => {
     const array = [];
     for (let i = 1; i <= arrayLength; i++) {

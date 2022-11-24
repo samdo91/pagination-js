@@ -26,7 +26,7 @@ function Pagination({ $target, initialState }) {
     const listItems = this.$paginatedList.querySelectorAll("li");
 
     ///  const paginationLimit :한번에 표기할 <li>의 양
-    const paginationLimit = 5;
+    const paginationLimit = 10;
     ///  const paginationLimit :한번에 표기할 <li>의 양
 
     // 버튼 갯수관련이다.
@@ -115,12 +115,37 @@ function Pagination({ $target, initialState }) {
         }
       });
 
-      buttonItem.forEach((item, index) => {
-        item.classList.add("hidden");
-        if (index === pageNum - 1) {
-          item.classList.remove("hidden");
-        }
-      });
+      if (pageNum <= 5) {
+        buttonItem.forEach((item, index) => {
+          item.classList.add("hidden");
+          if (index < 9) {
+            item.classList.remove("hidden");
+          }
+        });
+      } else {
+        buttonItem.forEach((item, index) => {
+          item.classList.add("hidden");
+          if (pageNum - 5 <= index && index < pageNum + 4) {
+            item.classList.remove("hidden");
+          }
+        });
+      }
+
+      // if ((pageNum = 1)) {
+      //   buttonItem.forEach((item, index) => {
+      //     item.classList.add("hidden");
+      //     if (pageNum === index || index < pageNum + 5) {
+      //       item.classList.remove("hidden");
+      //     }
+      //   });
+      // } else if ((pageNum = 2)) {
+      //   buttonItem.forEach((item, index) => {
+      //     item.classList.add("hidden");
+      //     if (pageNum === index || index < pageNum + 5) {
+      //       item.classList.remove("hidden");
+      //     }
+      //   });
+      // }
     };
 
     window.addEventListener("load", () => {
