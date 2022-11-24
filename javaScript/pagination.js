@@ -28,9 +28,14 @@ function Pagination({ $target, initialState }) {
     ///  const paginationLimit :한번에 표기할 <li>의 양
     const paginationLimit = 5;
     ///  const paginationLimit :한번에 표기할 <li>의 양
+
+    // 버튼 갯수관련이다.
     const pageCount = Math.ceil(listItems.length / paginationLimit);
+    //기본페이지다.
     let currentPage = 1;
 
+    console.log("pageCount", pageCount);
+    ///버튼 활성화
     const disableButton = (button) => {
       button.classList.add("disabled");
       button.setAttribute("disabled", true);
@@ -64,7 +69,7 @@ function Pagination({ $target, initialState }) {
         }
       });
     };
-
+    //pagination-button 갯수 구현
     const appendPageNumber = (index) => {
       const pageNumber = document.createElement("button");
       pageNumber.className = "pagination-number";
@@ -73,25 +78,46 @@ function Pagination({ $target, initialState }) {
       pageNumber.setAttribute("aria-label", "Page " + index);
       this.$paginationNumbers.appendChild(pageNumber);
     };
-
+    //pagination-button 갯수 구현
+    //pageCount 만큼 구현한다.
     const getPaginationNumbers = () => {
       for (let i = 1; i <= pageCount; i++) {
         appendPageNumber(i);
       }
     };
+    const buttonItem = document.querySelectorAll(".pagination-number");
 
+    ///  paginationButtonLimit :한번에 표기할 button의 양
+    const paginationButtonLimit = 9;
+    ///  paginationButtonLimit :한번에 표기할  button의 양
+
+    /// 여기서 li의 갯수를 구현
+    //pageNum 값은 currentPage 값이 된다. 그 값을 보내준다.
     const setCurrentPage = (pageNum) => {
       currentPage = pageNum;
+      const buttonItem = document.querySelectorAll(".pagination-number");
 
+      //pagination-button을 액티브한다.
       handleActivePageNumber();
+
+      //pagination-화살표 앞 뒤를 판단하여 액티브할지 안할지를 정한다.
       handlePageButtonsStatus();
 
-      const prevRange = (pageNum - 1) * paginationLimit;
-      const currRange = pageNum * paginationLimit;
+      const prevRange = (currentPage - 1) * paginationLimit;
+      const currRange = currentPage * paginationLimit;
+      const prevButton = (currentPage - 1) * paginationButtonLimit;
+      const currButton = currentPage * paginationButtonLimit;
 
       listItems.forEach((item, index) => {
         item.classList.add("hidden");
         if (index >= prevRange && index < currRange) {
+          item.classList.remove("hidden");
+        }
+      });
+
+      buttonItem.forEach((item, index) => {
+        item.classList.add("hidden");
+        if (index === pageNum - 1) {
           item.classList.remove("hidden");
         }
       });
@@ -136,6 +162,7 @@ function Pagination({ $target, initialState }) {
   this.$prevButton.setAttribute("title", "Previous page");
 
   this.$paginationNumbers = document.createElement("div");
+  this.$paginationNumbers.className = "pagination-numbers";
   this.$paginationNumbers.id = "pagination-numbers";
 
   this.nextButton = document.createElement("button");
